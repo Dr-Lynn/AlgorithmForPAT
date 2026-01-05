@@ -8,7 +8,7 @@
 
 ​       long long类型赋初值大于2^31-1时需要在初值后加上LL，否则编译会出错
 
-​       long long 的输入输出：%ld
+​       long long 的输入输出：%lld
 
 3. 整形数据可以加unsigned表示无符号类型占用位数和原先相同，但把负数范围挪到正数部分：
 
@@ -37,7 +37,9 @@
 
 ​       `const double pi = 3.14`
 
-## 数学函数
+## 2.2 顺序结构
+
+1. 数学函数
 
 ```c
 #include <cmath>
@@ -48,5 +50,37 @@ round(a)：a 的四舍五入（需要注意 %.0f 使用的是四舍六入五成�
 pow(a, b)：a 的 b 次方，其中 b 也可以是浮点型
 sqrt(a)：a 的算术平方根（即开根号）
 log(a)：a 的以自然对数e为底的对数
+```
+
+2. scanf函数的使用
+
+```c
+scanf("格式控制", 变量地址); 
+//输入时需要按空格，就写成%d %d或者干脆不加空格；输入时需要按冒号，就写%d:%d；输入时需要按逗号，就写%d,%d这就是格式控制
+
+int a;
+char c, str[10];
+scanf("%d %c%s",&a,&c,str);
+//%c格式可以读入空格和换行，所以可以多加一个空格的格式来卡掉一个空格
+```
+
+3. Switch结构
+
+```c
+int a = 6,b = 2;
+    switch(a + b)
+    {
+        case 2:
+            printf("%d\n",a);
+            break;
+        case 3:
+            printf("%d\n",b);
+            break; //没有break就会一个一个往下执行
+        case 4:
+            printf("%d\n",a+b);
+            break;
+        default: //都不符合的情况，最后跳出分支
+            printf("sad story\n");
+    }
 ```
 
