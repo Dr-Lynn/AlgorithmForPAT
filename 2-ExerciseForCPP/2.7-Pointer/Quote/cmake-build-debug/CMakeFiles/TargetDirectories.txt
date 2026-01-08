@@ -1,0 +1,3 @@
+D:/Documents/code/AlgorithmForPAT/2-ExerciseForCPP/2.7-Pointer/Quote/cmake-build-debug/CMakeFiles/Quote.dir
+D:/Documents/code/AlgorithmForPAT/2-ExerciseForCPP/2.7-Pointer/Quote/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Documents/code/AlgorithmForPAT/2-ExerciseForCPP/2.7-Pointer/Quote/cmake-build-debug/CMakeFiles/rebuild_cache.dir
