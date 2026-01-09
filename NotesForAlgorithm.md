@@ -537,3 +537,47 @@ int main() {
 
 ```
 
+### B1026
+
+```c
+#include <stdio.h>
+int main() {
+    int c1,c2;
+    scanf("%d%d",&c1,&c2);
+    int ans = c2 - c1;
+    //判断是否需要四舍五入，因为是除以100，所以余数大于等于50就要进位（很有用）
+    if(ans%100>=50)
+    {
+        ans = ans/100+1;
+    }
+    else
+    {
+        ans = ans/100;
+    }
+    printf("%02d:%02d:%02d\n",ans/3600,ans%3600/60,ans%60);
+    //%02d使整形固定输出两位，如果是0则输出00，后面是给出秒后换算成时分秒格式的方法，最后应该是ans%3600%60,但实际上直接%60结果是一样的，就不用再多写一步了
+    return 0;
+}
+//这道题考的其实是余数的使用，可以找几道类似的题做？虽然很麻烦就是了
+```
+
+### 2的幂，有关整数越界的问题
+
+```c
+#include <stdio.h>
+int main()
+{
+    int n;
+    int integer = 1;
+    scanf("%d",&n);
+    for(int i = 1;i<=n;i++)
+    {
+        integer = integer*2%1007;
+        //都算完在模1007会超级越界，所以只好边算边取模
+    }
+    printf("%ld\n",integer);
+    return 0;
+}
+//2的幂真的非常大，很快就能超过long long可以定义的范围
+```
+

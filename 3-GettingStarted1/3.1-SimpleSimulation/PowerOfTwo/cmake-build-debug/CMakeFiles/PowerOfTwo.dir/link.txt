@@ -1,0 +1,3 @@
+"D:\CLion\CLion 2021.1.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\PowerOfTwo.dir/objects.a
+C:\mingw64\bin\ar.exe cr CMakeFiles\PowerOfTwo.dir/objects.a @CMakeFiles\PowerOfTwo.dir\objects1.rsp
+C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\PowerOfTwo.dir/objects.a -Wl,--no-whole-archive -o PowerOfTwo.exe -Wl,--out-implib,libPowerOfTwo.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\PowerOfTwo.dir\linklibs.rsp
