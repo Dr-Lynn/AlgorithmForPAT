@@ -1,0 +1,3 @@
+"D:\CLion\CLion 2021.1.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\B1032.dir/objects.a
+C:\mingw64\bin\ar.exe cr CMakeFiles\B1032.dir/objects.a @CMakeFiles\B1032.dir\objects1.rsp
+C:\mingw64\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\B1032.dir/objects.a -Wl,--no-whole-archive -o B1032.exe -Wl,--out-implib,libB1032.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\B1032.dir\linklibs.rsp

@@ -501,4 +501,39 @@ cour<< setiosflags(ios::fixed)<< setprecision(2)<<123.4567<<endl;
    while(T--){...}
    ```
 
-   
+
+# ch3 入门篇1 入门模拟
+
+## 3.1 简单模拟（记录上机训练实战指南里的错题）
+
+### B1032
+
+```c
+#include <stdio.h>
+const int maxn = 100010;
+int school[maxn] = {0};
+//长度可变的数组应在cpp文件中使用，c不给过
+int main() {
+    int n, schId, score;
+    scanf("%d",&n);
+    for(int i = 0;i<n;i++)
+    {
+        scanf("%d%d",&schId,&score);
+        school[schId]+=score;
+    }
+    int k = 1, MAX = -1;
+    //反正分数都是大于等于0的，初始最大值是-1即可
+    for(int i = 1;i<=n;i++)
+    {
+        if(school[i]>MAX)
+        {
+            MAX = school[i];
+            k = i;
+        }
+    }
+    printf("%d %d\n",k,MAX);
+    return 0;
+}
+
+```
+
