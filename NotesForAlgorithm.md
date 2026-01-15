@@ -617,3 +617,54 @@ int main() {
 }
 ```
 
+## 3.2 查找元素
+
+### 头文件 iomanid
+
+`#include <iomanip>`是 C++ 标准库中的一个头文件，全称是 **Input/Output Manipulators（输入/输出操纵器）**。它主要用于格式化输出，提供了多种控制输出格式的函数和工具。
+
+**主要功能和作用：**
+
+1. **设置浮点数精度**
+
+```c
+cout << fixed << setprecision(2) << 3.14159;  // 输出：3.14
+```
+
+- `fixed`：使用固定小数格式
+- `setprecision(n)`：设置精度为 n 位小数
+
+2. **设置字段宽度和填充**
+
+```c
+cout << setw(10) << setfill('*') << 42;  // 输出：********42
+```
+
+- `setw(n)`：设置输出宽度为 n 个字符
+- `setfill(ch)`：用指定字符 ch 填充空白
+
+3. **十六进制、八进制输出**
+
+```c
+cout << hex << 255;     // 输出：ff（十六进制）
+cout << oct << 255;     // 输出：377（八进制）
+```
+
+4. **控制对齐方式**
+
+```c
+cout << left << setw(10) << "Hello";   // 左对齐
+cout << right << setw(10) << "World";  // 右对齐
+```
+
+**常用的 `<iomanip>` 操纵器总结：**
+
+| 操纵器            | 功能           | 示例                                      |
+| :---------------- | :------------- | :---------------------------------------- |
+| `fixed`           | 固定小数格式   | `cout << fixed << 3.1415;`                |
+| `scientific`      | 科学计数法格式 | `cout << scientific << 123.456;`          |
+| `setprecision(n)` | 设置精度       | `cout << setprecision(2);`                |
+| `setw(n)`         | 设置字段宽度   | `cout << setw(10) << "Hi";`               |
+| `setfill(ch)`     | 设置填充字符   | `cout << setfill('*') << setw(10) << 42;` |
+| `left`            | 左对齐         | `cout << left << setw(10) << "Hi";`       |
+| `right`           | 右对齐         | `cout << right << setw(10) << "Hi";`      |
