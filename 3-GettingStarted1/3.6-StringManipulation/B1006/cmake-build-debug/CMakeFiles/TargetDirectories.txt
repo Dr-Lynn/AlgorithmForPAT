@@ -1,0 +1,3 @@
+D:/Documents/code/AlgorithmForPAT/3-GettingStarted1/3.6-StringManipulation/B1006/cmake-build-debug/CMakeFiles/B1006.dir
+D:/Documents/code/AlgorithmForPAT/3-GettingStarted1/3.6-StringManipulation/B1006/cmake-build-debug/CMakeFiles/edit_cache.dir
+D:/Documents/code/AlgorithmForPAT/3-GettingStarted1/3.6-StringManipulation/B1006/cmake-build-debug/CMakeFiles/rebuild_cache.dir

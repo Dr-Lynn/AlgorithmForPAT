@@ -668,3 +668,178 @@ cout << right << setw(10) << "World";  // 右对齐
 | `setfill(ch)`     | 设置填充字符   | `cout << setfill('*') << setw(10) << 42;` |
 | `left`            | 左对齐         | `cout << left << setw(10) << "Hi";`       |
 | `right`           | 右对齐         | `cout << right << setw(10) << "Hi";`      |
+
+## 3.6 字符串处理
+
+### stringstream（字符串流）
+
+**1. 基本概念**
+
+`stringstream` 是 C++ 标准库中的一个类，定义在 `<sstream>` 头文件中。它允许你像操作输入/输出流（如 `cin`、`cout`）一样操作字符串。
+
+**2. 主要用途**
+
+- **字符串分割**：按空格、逗号等分隔符分割字符串（应该是可以）
+- **类型转换**：在字符串和其他数据类型之间转换
+- **字符串格式化**：构建格式化的字符串
+
+**3. 基本用法**
+
+```c
+#include <iostream>
+#include <sstream>
+#include <string>
+using namespace std;
+
+int main() {
+    //创建字符串流 ss可以是任意名称
+    stringstream ss;
+    //向字符串流提取数据，以空格为分界线
+    ss << "Hello" << " "<<2024<< " "<<3.14;
+    //从字符串流提取数据
+    string word;
+    int year;
+    double pi;
+    //把提取到的字符串匹配进指定变量 
+    ss>>word>>year>>pi;
+    cout<<word<<endl;
+    cout<<year<<endl;
+    cout<<pi<<endl;
+    //输出：
+    //Hello
+    //2024
+    //3.14
+    return 0;
+}
+```
+
+**4. 字符串分割**
+
+```c
+string text = "Apple Banana Cherry Date";
+    stringstream ss(text); //使用字符串初始化流
+    string fruit;
+
+    while (ss>>fruit) //分割单词，分割出来的每个字符串都匹配进fruit
+    {
+        cout<<fruit<<endl;
+    }
+    // 输出:
+    // Apple
+    // Banana
+    // Cherry
+    // Date
+```
+
+**5. 常用方法**
+
+```c
+stringstream ss;
+ss.str("New content");      // 设置流内容
+string s = ss.str();        // 获取流内容，s里面会保存str字符串的全部内容
+ss.clear();                 // 清除错误标志
+ss.str("");                 // 清空内容
+
+//示例
+stringstream ss;
+string str;
+ss.str("Hello world");
+string s1,s2;
+ss>>s1>>s2;
+cout<<s1<<endl;
+cout<<s2<<endl;
+//输出
+//Hello
+//World
+```
+
+**6. 用其他符号做分隔符**
+
+```c
+//按逗号分割
+    string tex1 = "Apple,Banana,Cherry,Date,Elderberry";
+    stringstream ss1(tex1);
+    vector<string> fruits;
+    string item;
+
+    while (getline(ss1,item,','))
+    //ss1处理过的字符串赋值给item，第三个参数指定分隔符
+    {
+        fruits.push_back(item);
+        //定义一个新的字符串接收分割后的字符串
+    }
+    cout<<"按逗号分割的结果："<<endl;
+    for(auto& f : fruits)
+    {
+        cout<<f<<endl;
+    }
+```
+
+| 场景           | 方法                      | 说明                        |
+| :------------- | :------------------------ | :-------------------------- |
+| 空格分隔       | `ss >> word`              | 最简单，自动跳过空格        |
+| 单字符分隔     | `getline(ss, token, ';')` | 使用 `getline` 并指定分隔符 |
+| 多个连续分隔符 | 检查 `token.empty()`      | 决定是否跳过空字符串        |
+| 需要去除空格   | 结合 `trim()` 函数        | 分割前后去除空格            |
+| 带引号的CSV    | 状态机解析                | 需要跟踪引号状态            |
+| 多个分隔符     | 使用 `find_first_of`      | 不适合用 `stringstream`     |
+
+**核心要点**：
+
+1. `stringstream` 的 `>>` 运算符默认以**空白字符**分隔
+2. 使用 `getline(stream, string, delimiter)` 可以指定任意单个字符作为分隔符
+3. 对于复杂的分隔需求（多个分隔符、带引号字段等），可能需要结合其他方法或编写更复杂的解析逻辑
+
+### vector（动态数组）
+
+vector是C++标准模板库（STL）中的一种动态数组容器，定义在头文件<vector>中。它可以动态地增长和缩小，并且支持随机访问。
+
+**2.1 构造vector对象**
+
+```c
+vector<int> v1;  // 创建一个空vector，存储int类型
+vector<string> v2(5);  // 创建一个有5个字符串的vector
+vector<int> v3(5, 10); // 创建5个整数，每个初始化为10
+```
+
+**2.2 添加元素**
+
+```c
+v1.push_back(20);  // 在vector末尾添加一个元素
+```
+
+**2.3 访问元素**
+
+```c
+v1[0] = 10;  // 通过下标访问，不检查边界
+v1.at(0) = 10; // 通过at成员函数访问，会检查边界，越界时抛出异常
+```
+
+**2.4 获取vector大小**
+
+```c
+int size = v1.size();  // 返回元素个数
+```
+
+**2.5 遍历vector**
+
+```c
+// 使用下标
+for (int i = 0; i < v1.size(); i++) {
+    cout << v1[i] << endl;
+}
+// 使用迭代器
+for (vector<int>::iterator it = v1.begin(); it != v1.end(); ++it) {
+    cout << *it << endl;
+}
+// 使用范围for循环（C++11）
+for (auto x : v1) {
+    cout << x << endl;
+}
+```
+
+**2.6 删除元素**
+
+```c
+v1.pop_back();  // 删除最后一个元素
+```
