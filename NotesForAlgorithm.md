@@ -843,3 +843,70 @@ for (auto x : v1) {
 ```c
 v1.pop_back();  // 删除最后一个元素
 ```
+
+## STL库函数详解
+
+**1. `string::find()`**
+
+```c
+int e_pos = sci_num.find('E');
+```
+
+- **作用**：在字符串中查找指定字符
+- **参数**：要查找的字符
+- **返回值**：
+  - 找到：返回字符位置（索引，从0开始）
+  - 没找到：返回`string::npos`
+- **示例**：`"+1.23400E-03"`中找到'E'的位置是8
+
+**2. `string::substr()`**
+
+```c
+string num_part = sci_num.substr(0, e_pos);
+string decimal = num_part.substr(3);
+```
+
+- **作用**：提取子字符串
+- **两种形式**：
+  1. `substr(pos, count)`：从pos开始，提取count个字符
+  2. `substr(pos)`：从pos开始到字符串结尾
+- **示例**：
+  - `"+1.23400E-03".substr(0, 7)` → `"+1.23400"`
+  - `"+1.23400".substr(3)` → `"23400"`
+
+**3. `stoi()`**
+
+```c
+int exp = stoi(exp_part.substr(1));
+```
+
+- **作用**：将字符串转换为整数
+- **全称**：string to integer
+- **参数**：要转换的字符串
+- **注意**：会自动处理前导0，如`"03"`转换为`3`
+- **相关函数**：
+  - `stol()`：转为long
+  - `stoll()`：转为long long
+  - `stof()`：转为float
+  - `stod()`：转为double
+
+**4. `string::insert()`**
+
+```c
+result.insert(exp + 1, ".");
+```
+
+- **作用**：在指定位置插入字符串
+- **参数**：
+  1. 插入位置（索引）
+  2. 要插入的字符串
+- **示例**：`"1234".insert(2, ".")` → `"12.34"`
+
+**5. `string::length()` / `string::size()`**
+
+```c
+int decimal_len = decimal.length();
+```
+
+- **作用**：返回字符串长度
+- **注意**：`length()`和`size()`功能相同
