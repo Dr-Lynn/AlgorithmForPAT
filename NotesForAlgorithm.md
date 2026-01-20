@@ -911,6 +911,13 @@ int decimal_len = decimal.length();
 - **作用**：返回字符串长度
 - **注意**：`length()`和`size()`功能相同
 
+**6. 反转数组，什么类型都行**
+
+```c
+#include <string>
+string reversed(str.rbegin(), str.rend());
+```
+
 ### B1048 有关数字和字符的转换
 
 1. 使用 `char - '0'` 将单个字符转换为数字
