@@ -1,4 +1,4 @@
-# ch2 C/C++快速入门
+# Ch2 C/C++快速入门
 
 ## 2.1 基本数据类型
 
@@ -922,3 +922,197 @@ string reversed(str.rbegin(), str.rend());
 
 1. 使用 `char - '0'` 将单个字符转换为数字
 2. 使用 `数字 + '0'` 将数字转换为字符
+
+## Ch3 Summery
+
+# Ch4 算法初步
+
+## 4.1 排序
+
+### 4.1.1 选择排序
+
+对一个无序数组进行循环，假定一个存在于数组最开有的有序数组（可以是0个元素），每一轮挑出一个最小的元素与待排序的第一个元素交换，也就是把最小的这个元素插入到有序数组的队尾，以此类推直到全部排序完成。
+
+存在于数组开头的有序数组，实际上就是由每一轮从待排序数组里挑出的最小元素升序排列而成。
+
+```c
+#include <algorithm>  // 用于swap函数
+// 基础版本的选择排序
+void selectionSort(vector<int>& arr) {
+    int n = arr.size();
+    
+    // 遍历所有位置
+    for (int i = 0; i < n - 1; i++) {
+        // 找到从i到末尾最小元素的索引
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[minIndex]) {
+                minIndex = j;
+            }
+        }
+        
+        // 将最小元素交换到当前位置
+        swap(arr[i], arr[minIndex]);
+    }
+}
+```
+
+### 4.1.2 插入排序
+
+**就像打扑克牌时整理手牌**：每次摸到一张新牌，把它插到手里已有牌中正确的位置。
+
+- **稳定排序**：相等元素的相对顺序不会改变
+- **原地排序**：不需要额外空间（除了一些临时变量）
+- **自适应**：数据越接近有序，排序越快
+- **适合小数据**：数据量小的时候效率高
+- **数据基本有序时最快**：能达到接近O(n)的时间复杂度
+
+| 情况         | 时间复杂度 | 说明                                     |
+| :----------- | :--------- | :--------------------------------------- |
+| **最好情况** | O(n)       | 数组已经有序，每次只需要比较一次         |
+| **平均情况** | O(n²)      | 需要移动大约一半的元素                   |
+| **最坏情况** | O(n²)      | 数组完全逆序，每次都要移动所有已排序元素 |
+
+```c
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void insertionSort(vector<int>& arr) {
+    int n = arr.size();
+    
+    // 从第2个元素开始（下标1），因为第1个元素默认有序
+    for (int i = 1; i < n; i++) {
+        int key = arr[i];  // 当前要插入的"新牌"
+        int j = i - 1;     // 从当前位置的前一个开始比较
+        
+        // 找插入位置：把比key大的元素都往后挪
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j];  // 元素后移
+            j--;
+        }
+        
+        // 找到位置了，插入key
+        arr[j + 1] = key;
+    }
+}
+```
+
+### STL中的排序函数
+
+```c
+#include <algorithm>
+#include <vector>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    vector<int> arr = {64, 25, 12, 22, 11};
+    
+    // 1. std::sort - 最常用的排序函数（快速排序的变种）
+    // 时间复杂度：O(n log n)
+    sort(arr.begin(), arr.end());
+    cout << "std::sort 升序: ";
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+    
+    // 降序排序
+    sort(arr.begin(), arr.end(), greater<int>());
+    cout << "std::sort 降序: ";
+    for (int num : arr) cout << num << " ";
+    cout << endl;
+    
+    // 自定义比较函数
+    sort(arr.begin(), arr.end(), [](int a, int b) {
+        return a < b;  // 升序
+    });
+    
+    // 2. std::stable_sort - 稳定排序（归并排序）
+    // 保持相等元素的相对顺序
+    vector<pair<int, char>> pairs = {{1, 'a'}, {2, 'b'}, {1, 'c'}, {3, 'd'}};
+    stable_sort(pairs.begin(), pairs.end());
+    
+    // 3. std::partial_sort - 部分排序
+    // 只保证前k个元素有序
+    vector<int> arr2 = {9, 3, 6, 1, 7, 2, 8, 4, 5};
+    partial_sort(arr2.begin(), arr2.begin() + 3, arr2.end());
+    cout << "前3个最小元素: ";
+    for (int i = 0; i < 3; i++) cout << arr2[i] << " ";
+    cout << endl;
+    
+    // 4. std::nth_element - 找到第n小的元素
+    vector<int> arr3 = {9, 3, 6, 1, 7, 2, 8, 4, 5};
+    nth_element(arr3.begin(), arr3.begin() + 4, arr3.end());
+    cout << "第5小的元素: " << arr3[4] << endl;
+    
+    // 5. std::make_heap + std::sort_heap - 堆排序
+    vector<int> arr4 = {9, 3, 6, 1, 7, 2, 8, 4, 5};
+    make_heap(arr4.begin(), arr4.end());
+    sort_heap(arr4.begin(), arr4.end());
+    
+    return 0;
+}
+```
+
+### Sort()
+
+1. 需要头文件`#include <algorithm>`
+
+```c
+srot(首元素地址（必填）, 尾元素地址的下一个地址（必填）, 比较函数（非必填）);
+//不写比较函数默认对前面给出的区间进行递增排序
+```
+
+对char数组排序时默认为字典排序
+
+2. 比较函数cmp实现从大到小排序
+
+```c
+//定义从大到小排序
+bool cmp(int a, int b)
+{
+    return a > b; //当a > b时把a放在b前面，其他类型同理
+}
+sort(a, a+4, cmp); //这样就可以进行递减排序
+```
+
+3. 结构体数组排序
+
+```c
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+struct node
+{
+    int x,y;
+}ssd[10];
+bool cmp(node a,node b)
+{
+    if(a.x != b.x) return a.x > b.x;
+    else return a.y < b.y;
+    //如果x不相等按x的降序排列，否则按y的升序排列
+}
+int main() {
+    ssd[0].x = 2;
+    ssd[0].y = 2;
+    ssd[1].x = 1;
+    ssd[1].y = 3;
+    ssd[2].x = 2;
+    ssd[2].y = 1;
+
+    sort(ssd,ssd+3,cmp);
+    for(int i = 0;i<3;i++)
+    {
+        cout<<ssd[i].x<<" "<<ssd[i].y<<endl;
+    }
+
+    return 0;
+}
+```
+
+4. 容器的排序
+
+标准容器中，只有vector、string、deque是可以用sort的，set、map由红黑树实现，元素本身有序不能使用sort
+
