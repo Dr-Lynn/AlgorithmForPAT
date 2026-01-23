@@ -1116,3 +1116,47 @@ int main() {
 
 标准容器中，只有vector、string、deque是可以用sort的，set、map由红黑树实现，元素本身有序不能使用sort
 
+```C
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+bool cmp1(int a,int b)
+{
+    return a>b; //从大到小排序
+}
+bool cmp2(string str1, string str2)
+{
+    return str1.length() < str2.length(); //按string长度从小到大排序
+}
+bool cmp3(string c, string b)
+{
+    return strcmp(c,d)<0;//string头文件下比较两个char型数组的字典序大小，从小到大排列
+}
+int main() {
+    //用sort对vector排序
+    vector<int> vi;
+    vi.push_back(3);
+    vi.push_back(1);
+    vi.push_back(2);
+    sort(vi.begin(), vi.end(), cmp1);
+    for(int i = 0;i<3;i++)
+    {
+        cout<<vi[i]<<" ";
+    }
+    cout<<endl;
+    //用sort对string排序
+    string str[3] = {"bbbb", "cc", "aaa"};
+    sort(str, str+3, cmp2); //默认按字典顺序从小到大输出
+    for(int i = 0;i<3;i++)
+    {
+        cout<<str[i]<<endl;
+    }
+    return 0;
+}
+
+```
+
+### 4.1.3 排序题与sort函数的应用
+
