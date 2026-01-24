@@ -1160,3 +1160,27 @@ int main() {
 
 ### 4.1.3 排序题与sort函数的应用
 
+一个很重要的事情是sort的比较函数可以写得很复杂，根据多种外部条件进行排序：
+
+```c
+// 比较函数：用于排序
+bool compare(const Student &a, const Student &b) {
+    // 1. 首先按类别排序（类别小的在前）
+    if (a.type != b.type) {
+        return a.type < b.type;
+    }
+    // 2. 类别相同按总分降序排序
+    if (a.total != b.total) {
+        return a.total > b.total;
+    }
+    // 3. 总分相同按德分降序排序
+    if (a.moral != b.moral) {
+        return a.moral > b.moral;
+    }
+    // 4. 德分相同按准考证号升序排序
+    return a.id < b.id;
+}
+```
+
+## 4.2 哈希
+
