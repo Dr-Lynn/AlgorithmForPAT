@@ -1,0 +1,3 @@
+"D:\CLion\CLion 2021.1.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\MaxNum.dir/objects.a
+C:\mingw64\bin\ar.exe cr CMakeFiles\MaxNum.dir/objects.a @CMakeFiles\MaxNum.dir\objects1.rsp
+C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\MaxNum.dir/objects.a -Wl,--no-whole-archive -o MaxNum.exe -Wl,--out-implib,libMaxNum.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\MaxNum.dir\linklibs.rsp
