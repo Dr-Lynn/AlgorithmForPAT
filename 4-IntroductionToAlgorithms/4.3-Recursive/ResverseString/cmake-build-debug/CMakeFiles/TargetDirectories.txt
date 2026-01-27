@@ -1,3 +1,0 @@
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.3-Recursive/ResverseString/cmake-build-debug/CMakeFiles/ResverseString.dir
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.3-Recursive/ResverseString/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.3-Recursive/ResverseString/cmake-build-debug/CMakeFiles/rebuild_cache.dir
