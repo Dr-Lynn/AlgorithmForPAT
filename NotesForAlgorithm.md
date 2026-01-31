@@ -1209,3 +1209,344 @@ bool compare(const Student &a, const Student &b) {
 - 使用集合记录所有被覆盖的数字
 - 注意：每个数字在验证自身时产生的数字不应该算作"被其他数字覆盖"
 - 只需要记录中间结果，起始数字本身不需要记录（除非在其他数的验证过程中出现）
+
+## 递归
+
+你的问题非常棒！这确实是学习递归时最大的难关：**能看懂别人的递归代码，但自己不会写**。让我教你一套系统的方法来培养递归思维能力。
+
+### 一、递归思维的"三步法"
+
+#### 第一步：定义函数的职责（最重要！）
+**问自己：这个递归函数要完成什么任务？**
+
+对于归并排序：
+```cpp
+// 函数职责：将数组 arr 中从 left 到 right 的部分排好序
+void mergeSort(vector<int>& arr, int left, int right) {
+    // 待实现...
+}
+```
+
+**关键心态**：写递归时，你要**假设**这个函数已经能完成它的职责了！
+
+#### 第二步：处理基本情况（Base Case）
+**问自己：什么情况下问题简单到可以直接解决？**
+
+对于排序：
+- 如果数组长度为 0 或 1（left >= right），那么它已经是有序的
+```cpp
+if (left >= right) {
+    return;  // 直接返回，无需排序
+}
+```
+
+#### 第三步：分解问题并递归
+**问自己：如何把大问题分解成相同的小问题？**
+
+对于排序：
+1. 把数组分成两半
+2. 让"已经能工作的"递归函数处理每一半
+3. 合并结果
+
+```cpp
+int mid = left + (right - left) / 2;
+
+// 神奇的地方：假设 mergeSort 已经能正常工作！
+mergeSort(arr, left, mid);      // 左半部分已经排好序了
+mergeSort(arr, mid + 1, right); // 右半部分已经排好序了
+
+// 现在合并两个有序数组
+merge(arr, left, mid, right);
+```
+
+### 二、实际练习：从简单到复杂
+
+#### 练习1：计算阶乘（热身）
+```cpp
+// 职责：计算 n!
+int factorial(int n) {
+    // 1. 基本情况
+    if (n <= 1) return 1;
+    
+    // 2. 分解：n! = n * (n-1)!
+    // 3. 假设 factorial(n-1) 已经能正确工作
+    return n * factorial(n - 1);
+}
+```
+
+#### 练习2：斐波那契数列（理解重复计算）
+```cpp
+// 职责：计算第n个斐波那契数
+int fibonacci(int n) {
+    // 基本情况
+    if (n == 0) return 0;
+    if (n == 1) return 1;
+    
+    // 分解：f(n) = f(n-1) + f(n-2)
+    return fibonacci(n-1) + fibonacci(n-2);
+    // 注意：这是低效的实现，用于教学
+}
+```
+
+#### 练习3：二叉树的最大深度
+```cpp
+struct TreeNode {
+    int val;
+    TreeNode* left;
+    TreeNode* right;
+};
+
+// 职责：计算二叉树的最大深度
+int maxDepth(TreeNode* root) {
+    // 1. 基本情况
+    if (root == nullptr) return 0;
+    
+    // 2. 分解：树深度 = 1 + max(左子树深度, 右子树深度)
+    int leftDepth = maxDepth(root->left);    // 假设它能工作
+    int rightDepth = maxDepth(root->right);  // 假设它能工作
+    
+    // 3. 合并结果
+    return 1 + max(leftDepth, rightDepth);
+}
+```
+
+### 三、归并排序的构造思维过程
+
+让我们一步步重建归并排序：
+
+#### 步骤1：明确函数接口
+```cpp
+// 目标：排序整个数组
+void mergeSort(vector<int>& arr) {
+    // 调用辅助函数
+    mergeSortHelper(arr, 0, arr.size() - 1);
+}
+
+// 辅助函数：排序 arr[left...right]
+void mergeSortHelper(vector<int>& arr, int left, int right) {
+    // 下一步填充...
+}
+```
+
+#### 步骤2：思考基本情况
+```cpp
+void mergeSortHelper(vector<int>& arr, int left, int right) {
+    // 什么情况下最简单？
+    // 当数组只有一个或零个元素时，已经有序！
+    if (left >= right) {
+        return;  // 不需要做任何事情
+    }
+    
+    // 继续...
+}
+```
+
+#### 步骤3：思考如何分解
+```cpp
+void mergeSortHelper(vector<int>& arr, int left, int right) {
+    if (left >= right) return;
+    
+    // 如何把排序arr[left...right]分解成更小的问题？
+    // 分成两半，分别排序！
+    int mid = left + (right - left) / 2;
+    
+    // 现在我需要一个合并函数...
+    // 但先假设它能工作
+}
+```
+
+#### 步骤4：递归调用并合并
+```cpp
+void mergeSortHelper(vector<int>& arr, int left, int right) {
+    if (left >= right) return;
+    
+    int mid = left + (right - left) / 2;
+    
+    // 递归排序两半（相信它们能工作！）
+    mergeSortHelper(arr, left, mid);      // 左半部分已排序
+    mergeSortHelper(arr, mid + 1, right); // 右半部分已排序
+    
+    // 现在合并两个有序数组
+    // 我需要一个 merge 函数
+    merge(arr, left, mid, right);
+}
+```
+
+#### 步骤5：实现 merge 函数
+```cpp
+void merge(vector<int>& arr, int left, int mid, int right) {
+    // 创建临时数组
+    vector<int> temp(right - left + 1);
+    
+    int i = left, j = mid + 1, k = 0;
+    
+    // 合并两个有序数组
+    while (i <= mid && j <= right) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+        } else {
+            temp[k++] = arr[j++];
+        }
+    }
+    
+    // 拷贝剩余元素
+    while (i <= mid) temp[k++] = arr[i++];
+    while (j <= right) temp[k++] = arr[j++];
+    
+    // 复制回原数组
+    for (int idx = 0; idx < k; idx++) {
+        arr[left + idx] = temp[idx];
+    }
+}
+```
+
+### 四、培养递归思维的训练计划
+
+#### 第1周：理解递归思维
+**每日一题**（每题都要画出递归树）：
+1. 计算数组的和
+2. 计算数组的最大值
+3. 反转字符串
+4. 判断字符串是否是回文
+5. 计算x的n次幂
+
+#### 第2周：简单分治问题
+1. **二分查找**（理解递归版本）
+2. **快速幂**（x^n = x^(n/2) × x^(n/2)）
+3. **归并排序**（每天手写一遍）
+4. **最大子数组和**（分治解法）
+
+#### 第3周：树形结构递归
+1. 二叉树遍历（前序、中序、后序）
+2. 二叉树节点计数
+3. 判断两棵树是否相同
+4. 翻转二叉树
+
+#### 第4周：复杂分治
+1. 快速排序
+2. 最近点对问题
+3. 矩阵乘法（Strassen算法）
+4. 大整数乘法（Karatsuba算法）
+
+### 五、递归思维训练题详解
+
+#### 例题：计算数组的和（递归版）
+```cpp
+// 职责：计算 arr[0...n-1] 的和
+int sumArray(vector<int>& arr, int n) {
+    // 1. 基本情况
+    if (n == 0) return 0;
+    
+    // 2. 分解：总和 = 最后一个元素 + 前面所有元素的和
+    // 3. 假设 sumArray(arr, n-1) 已经能正确工作
+    return arr[n-1] + sumArray(arr, n-1);
+}
+```
+
+#### 递归树可视化：
+```
+sumArray([1,2,3,4], 4)
+= 4 + sumArray([1,2,3], 3)
+= 4 + (3 + sumArray([1,2], 2))
+= 4 + (3 + (2 + sumArray([1], 1)))
+= 4 + (3 + (2 + (1 + sumArray([], 0))))
+= 4 + (3 + (2 + (1 + 0)))
+= 10
+```
+
+### 六、常见错误与调试技巧
+
+#### 错误1：缺少基本情况（无限递归）
+```cpp
+// 错误示例
+int factorial(int n) {
+    return n * factorial(n-1);  // 没有终止条件！
+}
+```
+
+#### 错误2：基本情况不正确
+```cpp
+// 错误示例：排序空数组
+void badSort(vector<int>& arr, int left, int right) {
+    if (left == right) return;  // 如果left>right会出错！
+    
+    // ...
+}
+```
+
+#### 调试技巧：
+1. **打印递归深度**：
+```cpp
+void mergeSort(vector<int>& arr, int left, int right, int depth = 0) {
+    cout << string(depth, ' ') << "调用: left=" << left << ", right=" << right << endl;
+    // ...
+}
+```
+
+2. **使用调试器**：在递归函数开始设置断点，观察调用栈
+
+3. **画递归树**：在纸上画出函数调用关系
+
+### 七、进阶思维：递归 -> 迭代的转换
+
+理解递归后，学习如何将递归转换为迭代（使用栈）：
+
+```cpp
+// 递归版：前序遍历二叉树
+void preorderRecursive(TreeNode* root) {
+    if (!root) return;
+    cout << root->val << " ";
+    preorderRecursive(root->left);
+    preorderRecursive(root->right);
+}
+
+// 迭代版：使用栈模拟递归
+void preorderIterative(TreeNode* root) {
+    stack<TreeNode*> stk;
+    if (root) stk.push(root);
+    
+    while (!stk.empty()) {
+        TreeNode* node = stk.top();
+        stk.pop();
+        cout << node->val << " ";
+        
+        // 注意：栈是后进先出，所以先压右孩子
+        if (node->right) stk.push(node->right);
+        if (node->left) stk.push(node->left);
+    }
+}
+```
+
+### 八、总结：递归思维的核心
+
+1. **相信递归函数**：写递归时，假设它已经能解决子问题
+2. **定义明确职责**：每个递归函数只做一件事
+3. **找到基本情况**：问题最简单的情况是什么？
+4. **正确分解问题**：如何把大问题分解成相同的小问题？
+5. **合并子问题结果**：如何把小问题的解合并成大问题的解？
+
+#### 练习题目（按难度排序）：
+
+```cpp
+// 初级
+1. 计算链表长度（递归版）
+2. 反转链表（递归版）
+3. 判断二叉树是否平衡
+
+// 中级
+4. 二叉树的最大路径和
+5. 汉诺塔问题
+6. 全排列问题
+
+// 高级
+7. N皇后问题（回溯法）
+8. 解数独（回溯法）
+9. 分形图形生成（如Koch雪花）
+```
+
+**最重要的建议**：从今天起，每看到一个递归问题，都按照"三步法"分析：
+1. 函数职责是什么？
+2. 基本情况是什么？
+3. 如何分解和合并？
+
+坚持练习2-3周，你会发现递归思维变得自然起来！你现在可以挑一个简单的题目试试，我来指导你一步步分析。
