@@ -1,3 +1,0 @@
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.6-TwoPointers/RecursiveMergeSort/cmake-build-debug/CMakeFiles/RecursiveMergeSort.dir
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.6-TwoPointers/RecursiveMergeSort/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Documents/code/AlgorithmForPAT/4-IntroductionToAlgorithms/4.6-TwoPointers/RecursiveMergeSort/cmake-build-debug/CMakeFiles/rebuild_cache.dir

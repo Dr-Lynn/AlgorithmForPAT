@@ -1,3 +1,0 @@
-"D:\CLion\CLion 2021.1.3\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\RecursiveMergeSort.dir/objects.a
-C:\mingw64\bin\ar.exe cr CMakeFiles\RecursiveMergeSort.dir/objects.a @CMakeFiles\RecursiveMergeSort.dir\objects1.rsp
-C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\RecursiveMergeSort.dir/objects.a -Wl,--no-whole-archive -o RecursiveMergeSort.exe -Wl,--out-implib,libRecursiveMergeSort.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\RecursiveMergeSort.dir\linklibs.rsp
