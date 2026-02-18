@@ -1550,3 +1550,69 @@ void preorderIterative(TreeNode* root) {
 3. 如何分解和合并？
 
 坚持练习2-3周，你会发现递归思维变得自然起来！你现在可以挑一个简单的题目试试，我来指导你一步步分析。
+
+# Ch5 数学相关
+
+## 最大公约数和最小公倍数
+
+### 辗转相除法求最大公约数
+
+```c++
+#include <iostream>
+#include <algorithm>  // 包含STL算法
+#include <numeric>    // 包含STL数值算法（C++17及以上）
+using namespace std;
+
+// 方法1：递归实现辗转相除法
+int gcd_recursive(int a, int b) {
+    // 如果b为0，a就是最大公约数
+    if (b == 0) {
+        return a;
+    }
+    // 递归调用
+    return gcd_recursive(b, a % b);
+}
+
+// 方法2：迭代实现辗转相除法
+int gcd_iterative(int a, int b) {
+    while (b != 0) {
+        int temp = b;
+        b = a % b;
+        a = temp;
+    }
+    return a;
+}
+
+// 方法3：使用STL库函数（C++17及以上）
+// __gcd() 是GCC编译器的扩展，不是标准C++，但可以在dev-c++中使用
+int gcd_stl(int a, int b) {
+    // 方法3.1：使用GCC扩展函数（在dev-c++中可用）
+    return __gcd(a, b);
+    
+    // 方法3.2：使用C++17标准库函数
+    // return std::gcd(a, b);  // 需要C++17支持
+}
+```
+
+### 最小公倍数
+
+```C++
+// 方法1：基于公式 LCM(a, b) = a * b / GCD(a, b)
+int lcm_formula(int a, int b) {
+    // 先计算最大公约数
+    int g = gcd_iterative(a, b);
+    // 使用公式计算最小公倍数
+    // 注意：先除后乘，避免溢出
+    return a / g * b;
+}
+
+// 方法2：使用STL库函数（C++17及以上）
+int lcm_stl(int a, int b) {
+    // 方法2.1：使用GCC扩展函数
+    return a / __gcd(a, b) * b;
+    
+    // 方法2.2：使用C++17标准库函数
+    // return std::lcm(a, b);  // 需要C++17支持
+}
+```
+
